@@ -1,0 +1,20 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/isabelzhong/Downloads/CS211/cs211_final
+-- The CXX compiler identification is AppleClang 12.0.5.12050022
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Error at CMakeLists.txt:7 (include):
+  include could not find load file:
+
+    .cs211/cmake/CMakeLists.txt
+
+
+CMake Error at CMakeLists.txt:14 (add_program):
+  Unknown CMake command "add_program".
+
+
+-- Configuring incomplete, errors occurred!
+See also "/Users/isabelzhong/Downloads/CS211/cs211_final/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "/Users/isabelzhong/Downloads/CS211/cs211_final/cmake-build-debug/CMakeFiles/CMakeError.log".
