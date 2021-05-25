@@ -1,0 +1,5 @@
+#pragma once
+
+#define GE211_VERSION_MAJOR 2021
+#define GE211_VERSION_MINOR 5
+#define GE211_VERSION_PATCH 1

@@ -74,6 +74,6 @@ Model::on_frame(double dt)
             }
             }
         }
-        ball = ball.next(dt);
+        bird = bird.next(dt);
     }
 }
