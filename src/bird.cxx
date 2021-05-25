@@ -15,7 +15,7 @@ Bird::Bird(Game_config const& config)
 { }
 
 Position
-Ball::top_left() const
+Bird::top_left() const
 {
 
     return {center.x - radius, center.y - radius};
@@ -23,7 +23,7 @@ Ball::top_left() const
 
 
 bool
-Ball::hits_bottom(Game_config const& config) const
+Bird::hits_bottom(Game_config const& config) const
 {
 
     if (center.y + radius > config.scene_dims.height) {
@@ -66,16 +66,20 @@ Bird::next(double dt) const
 // Otherwise, they do.
 //
 bool
-Bird::hits_block(Obstacle const& obstacle) const
-{
-    if (center.x + radius < obstacle.top_left().x ||
-        obstacle.top_right().x < center.x - radius ||
-        center.y + radius < obstacle.top_left().y ||
-        obstacle.bottom_left().y < center.y - radius) {
-        return false;
+Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
+    for (size_t i = 0; i < obstacles.size(); i++) {
+        if (center.x + radius < obstacles[i].top_left().x ||
+            obstacles[i].top_right().x < center.x - radius ||
+            center.y + radius < obstacles[i].top_left().y ||
+            obstacles[i].bottom_left().y < center.y - radius) {
+            return false;
+        } else {
+            return true;
+        }
     }
-    return true;
 }
+
+
 
 
 bool

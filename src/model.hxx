@@ -1,6 +1,9 @@
 #pragma once
 
 #include <ge211.hxx>
+#include "bird.hxx"
+#include "game_config.hxx"
+#include <vector>
 
 class Model
 {
@@ -59,5 +62,8 @@ class Model
     // The state of the ball. Much of the model's business actually
     // happens in there, so see ball.hxx for that.
     Bird bird;
+
+    // random obstacle height
+    ge211::Random_source<float> random_obstacle_height;
 
 };
