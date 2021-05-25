@@ -5,15 +5,22 @@ Model::Model(Game_config const& config)
           bird(config),
           random_obstacle_height(0, config.obstacle_max_height)
 {
-    for (int i = 0; i < config.num_obstacles; i++) {
+    for (int i = 0; i < config.num_obstacles/2; i++) {
             int x = ((config.scene_dims().width * 0.75) +
                      (i * config.obstacle_width) +
                      (i * config.obstacle_side_spacing));
-            int y = 0;
-            Obstacle obstacle{x, y,
+            int height = random_obstacle_height.next();
+            int y = height + config.obstacle_top_down_spacing;
+            // top obstacle
+            Obstacle top_obstacle{x, 0,
                         config.obstacle_dims().width,
-                        random_obstacle_height.next()};
-            obstacles.push_back(obstacle);
+                        height};
+            obstacles.push_back(top_obstacle);
+            // bottom obstacle
+            Obstacle bottom_obstacle{x, y,
+                          config.obstacle_dims().width,
+                          height};
+            obstacles.push_back(bottom_obstacle);
     }
 }
 
@@ -63,7 +70,7 @@ Model::on_frame(double dt)
         } else {
             ball.velocity.height -= ball.acceleration.height;
             for (int i = 0; i < config.num_obstacles; i++) {
-                obstacles[i].top_left += {10,0};
+                obstacles[i].top_left -= {10,0};
             }
             }
         }
