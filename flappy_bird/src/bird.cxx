@@ -9,10 +9,10 @@
 //Model
 Bird::Bird(Game_config const& config)
         : radius(config.bird_radius),
-          center(Position(0,0)),
+          center(Position(config.bird_center_0)),
           velocity(Velocity(config.bird_velocity_0)),
           acceleration(Acceleration(config.bird_acceleration_0)),
-          live(true)
+          live(false)
 { }
 
 Position
@@ -111,6 +111,9 @@ operator<<(std::ostream& o, Bird const& bird)
     // right? So you can make that happen by making this print the
     // contents of the ball (however you like).
     o << "Bird{";
-    o << "TODO: see the bottom of ball.cxx for more info";
+    o << bird.radius;
+    o << bird.center;
+    o << bird.velocity;
+    o << bird.acceleration;
     return o << "}";
 }

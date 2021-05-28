@@ -48,7 +48,12 @@ void
 Model::jump()
 {
     if (bird.live) {
-        bird.velocity.height += 5;
+        std::cout << "I HATE IT HERE" << std::endl;
+        std::cout << bird.velocity.height  << std::endl;
+        // bird.velocity.height -= 500;
+        bird.acceleration.height -= 20;
+        bird.velocity.height += bird.acceleration.height;
+        std::cout << bird.velocity.height  << std::endl;
     } else {
         Bird new_bird(config);
         bird = new_bird;
@@ -69,15 +74,15 @@ Model::on_frame(double dt)
             bird.live = false;
             return;
         } else {
-            bird.velocity.height -= bird.acceleration.height;
-
+            bird.velocity.height += 9.8;
         }
+        for (Obstacle & o : obstacles) {
+            // std::cout<< o << std::endl;
+            o.x -= 1;
+            // std::cout<< o << std::endl;
+        }
+        bird = bird.next(dt);
     }
-    for (Obstacle o : obstacles) {
-        // std::cout<< obstacles[0] << std::endl;
-        o.width += 1;
-        // std::cout<< obstacles[0] << std::endl;
-    }
-    bird = bird.next(dt);
+
 }
 

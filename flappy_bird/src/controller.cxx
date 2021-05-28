@@ -22,9 +22,11 @@ Controller::on_key(ge211::Key key)
 {
     if (key == ge211::Key::code(' ')){
         if (model_.bird.live) {
+            std::cout << "jumpin" << std::endl;
             model_.jump();
         }
         else{
+            std::cout << "launchin" << std::endl;
             model_.launch();
         }
     }
