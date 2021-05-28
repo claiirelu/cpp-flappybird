@@ -60,6 +60,7 @@ public:
     // `Game_config`s into `Model`s if needed. You don't want that.
     explicit Model(Game_config const& config = Game_config());
 
+    //this causes errors
     std::vector<Obstacle> obstacles;
 
 ///MEMBER FUNCTIONS
@@ -67,5 +68,9 @@ public:
     void jump();
     // starts the game??
     void launch();
+
+    // The state of the bird. Much of the model's business actually
+    // happens in there, so see ball.hxx for that.
+    //error
     Bird bird;
 };
