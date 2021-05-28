@@ -74,9 +74,9 @@ Model::on_frame(double dt)
         }
     }
     for (Obstacle o : obstacles) {
-        std::cout<< obstacles[0] << std::endl;
+        // std::cout<< obstacles[0] << std::endl;
         o.width += 1;
-        std::cout<< obstacles[0] << std::endl;
+        // std::cout<< obstacles[0] << std::endl;
     }
     bird = bird.next(dt);
 }
