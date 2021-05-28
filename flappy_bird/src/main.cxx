@@ -1,7 +1,11 @@
 #include "controller.hxx"
+#include "model.hxx"
 
 int
 main()
 {
-    Controller().run();
+    Model model;
+    Controller controller(model);
+    controller.run();
+    // Controller().run();
 }

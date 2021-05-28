@@ -12,7 +12,7 @@ Bird::Bird(Game_config const& config)
           center(Position(0,0)),
           velocity(Velocity(config.bird_velocity_0)),
           acceleration(Acceleration(config.bird_acceleration_0)),
-          live(false)
+          live(true)
 { }
 
 Position

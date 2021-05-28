@@ -3,10 +3,10 @@
 Model::Model(Game_config const& config)
         : config(config),
           bird(config),
-          random_obstacle_height(0, config.obstacle_max_height)
+          random_obstacle_height(50, config.obstacle_max_height)
 {
     for (int i = 0; i < config.num_obstacles/2; i++) {
-            int x = ((config.scene_dims.width * 0.75) +
+            int x = ((config.scene_dims.width * 0.6) +
                      (i * config.obstacle_width) +
                      (i * config.obstacle_side_spacing));
             int height = random_obstacle_height.next();
@@ -19,7 +19,7 @@ Model::Model(Game_config const& config)
             // bottom obstacle
             Obstacle bottom_obstacle{x, y,
                           config.obstacle_width,
-                          height};
+                          config.scene_dims.height-y};
             obstacles.push_back(bottom_obstacle);
     }
 }
@@ -62,6 +62,7 @@ Model::jump()
 void
 Model::on_frame(double dt)
 {
+
     if (bird.live) {
         Bird next = bird.next(dt);
         if (bird.hits_bottom(config) || next.hits_obstacle(obstacles)) {
@@ -69,10 +70,13 @@ Model::on_frame(double dt)
             return;
         } else {
             bird.velocity.height -= bird.acceleration.height;
-            for (int i = 0; i < config.num_obstacles; i++) {
-                obstacles[i].top_left() -= {10, 0};
-            }
+
         }
+    }
+    for (Obstacle o : obstacles) {
+        std::cout<< obstacles[0] << std::endl;
+        o.width += 1;
+        std::cout<< obstacles[0] << std::endl;
     }
     bird = bird.next(dt);
 }

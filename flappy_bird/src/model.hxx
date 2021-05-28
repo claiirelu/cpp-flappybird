@@ -5,7 +5,7 @@
 #include "game_config.hxx"
 #include <vector>
 
-class Model
+struct Model
 {
     ///
     /// CONSTRUCTOR
@@ -31,7 +31,7 @@ class Model
     ge211::Random_source<float> random_obstacle_height;
 
 
-public:
+// public:
 
 
     // The state of the ball. Much of the model's business actually
