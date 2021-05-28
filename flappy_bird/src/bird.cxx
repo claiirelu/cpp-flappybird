@@ -6,6 +6,7 @@
 
 // It won't compile without this, so you get it for free.
 
+Model
 Bird::Bird(Game_config const& config)
         : radius(config.bird_radius),
           center(Position(0,0)),

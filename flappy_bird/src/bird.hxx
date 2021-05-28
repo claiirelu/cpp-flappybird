@@ -4,6 +4,7 @@
 
 #include <ge211.hxx>
 #include "game_config.hxx"
+#include "model.hxx"
 #include <iostream>
 
 
