@@ -11,9 +11,9 @@ Game_config::Game_config()
           num_obstacles{30},
           bird_radius{50},
           bird_center_0{200,375},
-          bird_velocity_0{150, -600},
+          bird_velocity_0{0, -600},
           bird_acceleration_0{0, 20},
-          obstacle_side_spacing{100},
+          obstacle_side_spacing{200},
           obstacle_top_down_spacing{200},
           obstacle_width{100},
           obstacle_max_height{400}

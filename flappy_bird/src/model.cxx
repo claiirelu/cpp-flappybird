@@ -3,14 +3,15 @@
 Model::Model(Game_config const& config)
         : config(config),
           bird(config),
-          random_obstacle_height(50, config.obstacle_max_height)
+          random_obstacle_height(50, config.obstacle_max_height),
+          random_offset(200, 400)
 {
     for (int i = 0; i < config.num_obstacles/2; i++) {
             int x = ((config.scene_dims.width * 0.6) +
                      (i * config.obstacle_width) +
                      (i * config.obstacle_side_spacing));
             int height = random_obstacle_height.next();
-            int y = height + config.obstacle_top_down_spacing;
+            int y = height + random_offset.next();
             // top obstacle
             Obstacle top_obstacle{x, 0,
                         config.obstacle_width,
@@ -48,12 +49,12 @@ void
 Model::jump()
 {
     if (bird.live) {
-        std::cout << "I HATE IT HERE" << std::endl;
-        std::cout << bird.velocity.height  << std::endl;
+        // std::cout << "I HATE IT HERE" << std::endl;
+        // std::cout << bird.velocity.height  << std::endl;
         // bird.velocity.height -= 500;
-        bird.acceleration.height -= 20;
-        bird.velocity.height += bird.acceleration.height;
-        std::cout << bird.velocity.height  << std::endl;
+        // bird.acceleration.height = 10;
+        bird.velocity.height = -400;
+        // std::cout << bird.velocity.height  << std::endl;
     } else {
         Bird new_bird(config);
         bird = new_bird;
@@ -70,11 +71,12 @@ Model::on_frame(double dt)
 
     if (bird.live) {
         Bird next = bird.next(dt);
-        if (bird.hits_bottom(config) || next.hits_obstacle(obstacles)) {
+        if (bird.hits_bottom(config) || bird.hits_obstacle(obstacles)) {
+            std::cout<< "hit" << std::endl;
             bird.live = false;
             return;
         } else {
-            bird.velocity.height += 9.8;
+            bird.velocity.height += bird.acceleration.height;
         }
         for (Obstacle & o : obstacles) {
             // std::cout<< o << std::endl;

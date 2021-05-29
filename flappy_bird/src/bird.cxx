@@ -27,7 +27,7 @@ bool
 Bird::hits_bottom(Game_config const& config) const
 {
 
-    if (center.y + radius > config.scene_dims.height) {
+    if (center.y > config.scene_dims.height) {
         return true;
     }
     return false;
@@ -68,17 +68,28 @@ Bird::next(double dt) const
 //
 bool
 Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
-    for (size_t i = 0; i < obstacles.size(); i++) {
-        if (center.x + radius < obstacles[i].top_left().x ||
-            obstacles[i].top_right().x < center.x - radius ||
-            center.y + radius < obstacles[i].top_left().y ||
-            obstacles[i].bottom_left().y < center.y - radius) {
-            return false;
-        } else {
+    for (Obstacle & o : obstacles) {
+        if (center.x - radius < o.top_left().x + o.width &&
+            center.x + radius > o.top_left().x &&
+            center.y - radius < o.top_left().y + o.height &&
+            center.y + radius > o.top_left().y) {
             return true;
         }
+
+        // if (center.x + 0 > o.top_left().x &&
+        //     center.x - 0 < o.top_left().x + o.width &&
+        //     center.y + 0 > o.top_left().y &&
+        //     center.y - 0 > o.top_left().y + o.height){
+        //     return true;
+        // }
+        // if (center.x + radius < o.top_left().x ||
+        //     o.top_right().x < center.x - radius ||
+        //     center.y + radius < o.top_left().y ||
+        //     o.bottom_left().y < center.y - radius) {
+        //     false
+        // }
     }
-    return true;
+    return false;
 }
 
 

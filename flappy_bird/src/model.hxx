@@ -30,6 +30,9 @@ struct Model
     // random obstacle height
     ge211::Random_source<float> random_obstacle_height;
 
+    // random obstacle offset
+    ge211::Random_source<float> random_offset;
+
 
 // public:
 
