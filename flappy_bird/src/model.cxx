@@ -88,3 +88,11 @@ Model::on_frame(double dt)
 
 }
 
+int
+Model::score()
+{
+    if (bird.gains_point(obstacles)){
+        scorevalue ++;
+    }
+    return scorevalue;
+}

@@ -128,6 +128,7 @@ struct Bird
     /// Intersection between a circle and a rectangle is tricky, so we
     /// will approximate it with the intersection of two rectangles.
     bool hits_obstacle(std::vector<Obstacle>& obstacles) const;
+    bool gains_point(std::vector<Obstacle>& obstacles) const;
 
 
     //

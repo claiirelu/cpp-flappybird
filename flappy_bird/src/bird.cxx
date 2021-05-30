@@ -92,8 +92,19 @@ Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
     return false;
 }
 
-
-
+bool
+Bird::gains_point(std::vector<Obstacle>& obstacles) const
+{
+    for (Obstacle& o : obstacles) {
+        if (center.x + radius == o.top_left().x &&
+            !hits_obstacle(obstacles)){
+               // center.y - radius > o.top_left().y + o.height &&
+             //   center.y + radius < o.top_left().y) {
+            return true;
+            }
+        }
+    return false;
+}
 
 bool
 operator==(Bird const& a, Bird const& b)
