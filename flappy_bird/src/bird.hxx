@@ -4,6 +4,7 @@
 
 #include <ge211.hxx>
 #include "game_config.hxx"
+//#include "model.hxx"
 #include <iostream>
 
 
@@ -127,6 +128,7 @@ struct Bird
     /// Intersection between a circle and a rectangle is tricky, so we
     /// will approximate it with the intersection of two rectangles.
     bool hits_obstacle(std::vector<Obstacle>& obstacles) const;
+    bool gains_point(std::vector<Obstacle>& obstacles) const;
 
 
     //
@@ -147,6 +149,10 @@ struct Bird
     /// Whether the ball is moving freely (true) or stuck to the top of
     /// the paddle (false).
     bool live;
+
+    bool started;
+
+    bool win;
 };
 
 /// Compares two `Ball`s for equality. This may be useful for testing.

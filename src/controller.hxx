@@ -12,6 +12,8 @@ public:
 
 protected:
     void draw(ge211::Sprite_set& set) override;
+    void on_key(ge211::Key) override;
+
 
 private:
     Model model_;

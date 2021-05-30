@@ -6,12 +6,15 @@
 
 // It won't compile without this, so you get it for free.
 
+//Model
 Bird::Bird(Game_config const& config)
         : radius(config.bird_radius),
-          center(Position(0,0)),
+          center(Position(config.bird_center_0)),
           velocity(Velocity(config.bird_velocity_0)),
           acceleration(Acceleration(config.bird_acceleration_0)),
-          live(false)
+          live(false),
+          started(false),
+          win(false)
 { }
 
 Position
@@ -26,7 +29,7 @@ bool
 Bird::hits_bottom(Game_config const& config) const
 {
 
-    if (center.y + radius > config.scene_dims.height) {
+    if (center.y > config.scene_dims.height) {
         return true;
     }
     return false;
@@ -67,21 +70,49 @@ Bird::next(double dt) const
 //
 bool
 Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
-    for (size_t i = 0; i < obstacles.size(); i++) {
-        if (center.x + radius < obstacles[i].top_left().x ||
-            obstacles[i].top_right().x < center.x - radius ||
-            center.y + radius < obstacles[i].top_left().y ||
-            obstacles[i].bottom_left().y < center.y - radius) {
-            return false;
-        } else {
+    for (Obstacle & o : obstacles) {
+        if (center.x - radius < o.top_left().x + o.width &&
+            center.x + radius > o.top_left().x &&
+            center.y - (radius - 12) < o.top_left().y + o.height &&
+            center.y + (radius - 12) > o.top_left().y) {
+            // std::cout<< "hit" << std::endl;
+            // std::cout << center.x << " , " << center.y << std::endl;
+            // std::cout << o.top_left().x << " , " << o.top_left().y << std::endl;
             return true;
         }
+
+
+        // if (center.x + 0 > o.top_left().x &&
+        //     center.x - 0 < o.top_left().x + o.width &&
+        //     center.y + 0 > o.top_left().y &&
+        //     center.y - 0 > o.top_left().y + o.height){
+        //     return true;
+        // }
+        // if (center.x + radius < o.top_left().x ||
+        //     o.top_right().x < center.x - radius ||
+        //     center.y + radius < o.top_left().y ||
+        //     o.bottom_left().y < center.y - radius) {
+        //     false
+        // }
     }
-    return true;
+    return false;
 }
 
-
-
+bool
+Bird::gains_point(std::vector<Obstacle>& obstacles) const
+{
+    if (live){
+        for (Obstacle& o : obstacles) {
+            if (center.x - radius == o.top_right().x &&
+                !hits_obstacle(obstacles)){
+                // center.y - radius > o.top_left().y + o.height &&
+                //   center.y + radius < o.top_left().y) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 bool
 operator==(Bird const& a, Bird const& b)
@@ -110,6 +141,9 @@ operator<<(std::ostream& o, Bird const& bird)
     // right? So you can make that happen by making this print the
     // contents of the ball (however you like).
     o << "Bird{";
-    o << "TODO: see the bottom of ball.cxx for more info";
+    o << bird.radius;
+    o << bird.center;
+    o << bird.velocity;
+    o << bird.acceleration;
     return o << "}";
 }

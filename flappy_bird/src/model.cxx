@@ -3,14 +3,15 @@
 Model::Model(Game_config const& config)
         : config(config),
           bird(config),
-          random_obstacle_height(0, config.obstacle_max_height)
+          random_obstacle_height(50, config.obstacle_max_height),
+          random_offset(150, 300)
 {
     for (int i = 0; i < config.num_obstacles/2; i++) {
-            int x = ((config.scene_dims.width * 0.75) +
+            int x = ((config.scene_dims.width * 0.6) +
                      (i * config.obstacle_width) +
                      (i * config.obstacle_side_spacing));
             int height = random_obstacle_height.next();
-            int y = height + config.obstacle_top_down_spacing;
+            int y = height + random_offset.next();
             // top obstacle
             Obstacle top_obstacle{x, 0,
                         config.obstacle_width,
@@ -19,7 +20,7 @@ Model::Model(Game_config const& config)
             // bottom obstacle
             Obstacle bottom_obstacle{x, y,
                           config.obstacle_width,
-                          height};
+                          config.scene_dims.height-y};
             obstacles.push_back(bottom_obstacle);
     }
 }
@@ -28,7 +29,10 @@ Model::Model(Game_config const& config)
 void
 Model::launch()
 {
-    bird.live = true;
+    if (!bird.started){
+        bird.started = true;
+        bird.live = true;
+    }
 }
 
 // Warning! Until you write code inside these member functions
@@ -48,7 +52,12 @@ void
 Model::jump()
 {
     if (bird.live) {
-        bird.velocity.height += 5;
+        // std::cout << "I HATE IT HERE" << std::endl;
+        // std::cout << bird.velocity.height  << std::endl;
+        // bird.velocity.height -= 500;
+        // bird.acceleration.height = 10;
+        bird.velocity.height = -400;
+        // std::cout << bird.velocity.height  << std::endl;
     } else {
         Bird new_bird(config);
         bird = new_bird;
@@ -62,18 +71,35 @@ Model::jump()
 void
 Model::on_frame(double dt)
 {
+
     if (bird.live) {
         Bird next = bird.next(dt);
-        if (bird.hits_bottom(config) || next.hits_obstacle(obstacles)) {
+        if (next.hits_bottom(config) || next.hits_obstacle(obstacles)
+            || scorevalue == config.num_obstacles/2) {
+            if (scorevalue == config.num_obstacles/2){
+                bird.win = true;
+            }
+            // std::cout<< "hit" << std::endl;
             bird.live = false;
             return;
         } else {
-            bird.velocity.height -= bird.acceleration.height;
-            for (int i = 0; i < config.num_obstacles; i++) {
-                obstacles[i].top_left() -= {10, 0};
-            }
+            bird.velocity.height += bird.acceleration.height;
         }
+        for (Obstacle & o : obstacles) {
+            // std::cout<< o << std::endl;
+            o.x -= 2;
+            // std::cout<< o << std::endl;
+        }
+        bird = bird.next(dt);
     }
-    bird = bird.next(dt);
+
 }
 
+int
+Model::score()
+{
+    if (bird.gains_point(obstacles)){
+        scorevalue ++;
+    }
+    return scorevalue;
+}
