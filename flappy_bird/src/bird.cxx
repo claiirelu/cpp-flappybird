@@ -12,7 +12,9 @@ Bird::Bird(Game_config const& config)
           center(Position(config.bird_center_0)),
           velocity(Velocity(config.bird_velocity_0)),
           acceleration(Acceleration(config.bird_acceleration_0)),
-          live(false)
+          live(false),
+          started(false),
+          win(false)
 { }
 
 Position
@@ -71,10 +73,14 @@ Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
     for (Obstacle & o : obstacles) {
         if (center.x - radius < o.top_left().x + o.width &&
             center.x + radius > o.top_left().x &&
-            center.y - radius < o.top_left().y + o.height &&
-            center.y + radius > o.top_left().y) {
+            center.y - (radius - 12) < o.top_left().y + o.height &&
+            center.y + (radius - 12) > o.top_left().y) {
+            std::cout<< "hit" << std::endl;
+            std::cout << center.x << " , " << center.y << std::endl;
+            std::cout << o.top_left().x << " , " << o.top_left().y << std::endl;
             return true;
         }
+
 
         // if (center.x + 0 > o.top_left().x &&
         //     center.x - 0 < o.top_left().x + o.width &&
@@ -95,14 +101,16 @@ Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
 bool
 Bird::gains_point(std::vector<Obstacle>& obstacles) const
 {
-    for (Obstacle& o : obstacles) {
-        if (center.x - radius == o.top_left().x &&
-            !hits_obstacle(obstacles)){
-               // center.y - radius > o.top_left().y + o.height &&
-             //   center.y + radius < o.top_left().y) {
-            return true;
+    if (live){
+        for (Obstacle& o : obstacles) {
+            if (center.x - radius == o.top_right().x &&
+                !hits_obstacle(obstacles)){
+                // center.y - radius > o.top_left().y + o.height &&
+                //   center.y + radius < o.top_left().y) {
+                return true;
             }
         }
+    }
     return false;
 }
 

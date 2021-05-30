@@ -4,7 +4,7 @@ Model::Model(Game_config const& config)
         : config(config),
           bird(config),
           random_obstacle_height(50, config.obstacle_max_height),
-          random_offset(200, 400)
+          random_offset(150, 300)
 {
     for (int i = 0; i < config.num_obstacles/2; i++) {
             int x = ((config.scene_dims.width * 0.6) +
@@ -29,7 +29,10 @@ Model::Model(Game_config const& config)
 void
 Model::launch()
 {
-    bird.live = true;
+    if (!bird.started){
+        bird.started = true;
+        bird.live = true;
+    }
 }
 
 // Warning! Until you write code inside these member functions
@@ -71,8 +74,12 @@ Model::on_frame(double dt)
 
     if (bird.live) {
         Bird next = bird.next(dt);
-        if (bird.hits_bottom(config) || bird.hits_obstacle(obstacles)) {
-            std::cout<< "hit" << std::endl;
+        if (next.hits_bottom(config) || next.hits_obstacle(obstacles)
+            || scorevalue == config.num_obstacles/2) {
+            if (scorevalue == config.num_obstacles/2){
+                bird.win = true;
+            }
+            // std::cout<< "hit" << std::endl;
             bird.live = false;
             return;
         } else {
@@ -80,7 +87,7 @@ Model::on_frame(double dt)
         }
         for (Obstacle & o : obstacles) {
             // std::cout<< o << std::endl;
-            o.x -= 1;
+            o.x -= 2;
             // std::cout<< o << std::endl;
         }
         bird = bird.next(dt);

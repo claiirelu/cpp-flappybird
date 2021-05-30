@@ -149,6 +149,10 @@ struct Bird
     /// Whether the ball is moving freely (true) or stuck to the top of
     /// the paddle (false).
     bool live;
+
+    bool started;
+
+    bool win;
 };
 
 /// Compares two `Ball`s for equality. This may be useful for testing.

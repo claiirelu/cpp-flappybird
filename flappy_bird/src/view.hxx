@@ -20,6 +20,8 @@ private:
     //temp
     ge211::Image_sprite const bird_sprite;
     ge211::Image_sprite const background_sprite;
+    ge211::Image_sprite const end_background_sprite;
+    ge211::Image_sprite const win_background_sprite;
 
     ge211::Text_sprite score_sprite;
 };

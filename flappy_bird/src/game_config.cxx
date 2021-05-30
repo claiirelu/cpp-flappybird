@@ -9,7 +9,7 @@
 Game_config::Game_config()
         : scene_dims{1000, 750},
           num_obstacles{30},
-          bird_radius{50},
+          bird_radius{30},
           bird_center_0{200,375},
           bird_velocity_0{0, -600},
           bird_acceleration_0{0, 20},
