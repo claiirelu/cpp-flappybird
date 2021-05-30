@@ -96,7 +96,7 @@ bool
 Bird::gains_point(std::vector<Obstacle>& obstacles) const
 {
     for (Obstacle& o : obstacles) {
-        if (center.x + radius == o.top_left().x &&
+        if (center.x - radius == o.top_left().x &&
             !hits_obstacle(obstacles)){
                // center.y - radius > o.top_left().y + o.height &&
              //   center.y + radius < o.top_left().y) {
