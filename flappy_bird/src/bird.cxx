@@ -75,9 +75,9 @@ Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
             center.x + radius > o.top_left().x &&
             center.y - (radius - 12) < o.top_left().y + o.height &&
             center.y + (radius - 12) > o.top_left().y) {
-            std::cout<< "hit" << std::endl;
-            std::cout << center.x << " , " << center.y << std::endl;
-            std::cout << o.top_left().x << " , " << o.top_left().y << std::endl;
+            // std::cout<< "hit" << std::endl;
+            // std::cout << center.x << " , " << center.y << std::endl;
+            // std::cout << o.top_left().x << " , " << o.top_left().y << std::endl;
             return true;
         }
 
