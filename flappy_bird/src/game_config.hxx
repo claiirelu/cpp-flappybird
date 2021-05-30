@@ -30,7 +30,8 @@ struct Game_config
 
 
     // The radius of the bird:
-    int bird_radius;
+    int bird_rad_width;
+    int bird_rad_height;
 
     // The bird's initial center {width, height}:
     ge211::Posn<int> bird_center_0;

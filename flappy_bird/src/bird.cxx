@@ -8,7 +8,8 @@
 
 //Model
 Bird::Bird(Game_config const& config)
-        : radius(config.bird_radius),
+        : rad_width(config.bird_rad_width),
+          rad_height(config.bird_rad_height),
           center(Position(config.bird_center_0)),
           velocity(Velocity(config.bird_velocity_0)),
           acceleration(Acceleration(config.bird_acceleration_0)),
@@ -21,7 +22,7 @@ Position
 Bird::top_left() const
 {
 
-    return {center.x - radius, center.y - radius};
+    return {center.x - rad_width, center.y - rad_height};
 }
 
 
@@ -29,7 +30,7 @@ bool
 Bird::hits_bottom(Game_config const& config) const
 {
 
-    if (center.y > config.scene_dims.height) {
+    if (center.y + rad_height > config.scene_dims.height) {
         return true;
     }
     return false;
@@ -46,7 +47,7 @@ Bird
 Bird::next(double dt) const
 {
     Bird result(*this);
-    result.velocity = result.velocity + acceleration*dt;
+    // result.velocity = result.velocity + acceleration*dt;
     result.center = result.center + velocity*dt;
     return result;
 }
@@ -71,10 +72,10 @@ Bird::next(double dt) const
 bool
 Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
     for (Obstacle & o : obstacles) {
-        if (center.x - radius < o.top_left().x + o.width &&
-            center.x + radius > o.top_left().x &&
-            center.y - (radius - 12) < o.top_left().y + o.height &&
-            center.y + (radius - 12) > o.top_left().y) {
+        if (center.x - rad_width < o.top_left().x + o.width &&
+            center.x + rad_width > o.top_left().x &&
+            center.y - rad_height < o.top_left().y + o.height &&
+            center.y + rad_height > o.top_left().y) {
             // std::cout<< "hit" << std::endl;
             // std::cout << center.x << " , " << center.y << std::endl;
             // std::cout << o.top_left().x << " , " << o.top_left().y << std::endl;
@@ -103,7 +104,7 @@ Bird::gains_point(std::vector<Obstacle>& obstacles) const
 {
     if (live){
         for (Obstacle& o : obstacles) {
-            if (center.x - radius == o.top_right().x &&
+            if (center.x - rad_width == o.top_right().x &&
                 !hits_obstacle(obstacles)){
                 // center.y - radius > o.top_left().y + o.height &&
                 //   center.y + radius < o.top_left().y) {
@@ -117,7 +118,8 @@ Bird::gains_point(std::vector<Obstacle>& obstacles) const
 bool
 operator==(Bird const& a, Bird const& b)
 {
-    if (a.radius == b.radius &&
+    if (a.rad_height == b.rad_height &&
+        a.rad_width == b.rad_width &&
         a.acceleration == b.acceleration &&
         a.velocity == b.velocity &&
         a.center == b.center &&
@@ -141,7 +143,8 @@ operator<<(std::ostream& o, Bird const& bird)
     // right? So you can make that happen by making this print the
     // contents of the ball (however you like).
     o << "Bird{";
-    o << bird.radius;
+    o << bird.rad_width;
+    o << bird.rad_height;
     o << bird.center;
     o << bird.velocity;
     o << bird.acceleration;

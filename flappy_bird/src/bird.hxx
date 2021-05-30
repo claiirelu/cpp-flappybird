@@ -136,7 +136,8 @@ struct Bird
     //
 
     /// The radius of the ball.
-    int radius;
+    int rad_width;
+    int rad_height;
 
     /// The position of the center of the ball.
     Position center;
