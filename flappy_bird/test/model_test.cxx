@@ -5,7 +5,6 @@
 Game_config const config;
 
 // FR1: The bird is initially placed in the center of the screen.
-// See line 10 of bird.cxx.
 TEST_CASE("Bird::Bird")
 {
     Bird bird(config);
@@ -14,7 +13,6 @@ TEST_CASE("Bird::Bird")
 }
 
 // FR2: The player can begin the game by pressing the spacebar.
-// See line 30 of bird.cxx.
 TEST_CASE("Make sure launch sets the bird to started and live")
 {
     Model m(config);
@@ -29,7 +27,6 @@ TEST_CASE("Make sure launch sets the bird to started and live")
 
 // FR 3.1: Pressing the spacebar after the game starts will make the bird “jump”
 // or move up on the screen.
-// See line 52 of model.cxx
 TEST_CASE("Bird jumps")
 {
     Model m(config);
@@ -45,7 +42,6 @@ TEST_CASE("Bird jumps")
 
 
 // FR 3.2: Otherwise, the bird will fall downwards towards the ground.
-// See line 72 of model.cxx
 TEST_CASE("Bird falls to floor")
 {
     Model m(config);
@@ -78,7 +74,6 @@ TEST_CASE("Bird falls to floor")
 // FR4: If the player hits an obstacle or the ground, the game ends.
 
 // FR4.1: If the player hits an obstacle, the game ends.
-// See line 73 of bird.cxx and line 74 of model.cxx
 TEST_CASE("Bird hits_obstacle")
 {
     Model m(config);
@@ -106,7 +101,6 @@ TEST_CASE("Bird hits_obstacle")
 }
 
 // FR4.2: If the player hits the ground, the game ends.
-// See line 30 of bird.cxx and line 77 of model.cxx
 TEST_CASE("Bird hits_bottom")
 {
     Bird bird(config);
@@ -120,7 +114,6 @@ TEST_CASE("Bird hits_bottom")
 
 // FR 5: When the player passes through all obstacles
 // (some set number of them), the game ends.
-// See line 74 of model.cxx
 TEST_CASE("Player wins")
 {
     Model m(config);
@@ -140,8 +133,8 @@ TEST_CASE("Player gains point")
 
     double const dt = 1;
     m.obstacles.clear();
-    m.obstacles.push_back({502,0, 2, 1});
-    //m.obstacles.push_back({507,0, 2, 1});
+    m.obstacles.push_back({472,0, 2, 1});
+    m.obstacles.push_back({474,0, 2, 1});
     m.bird.live = true;
     std::cout << m.bird.center <<std::endl;
 
@@ -157,65 +150,25 @@ TEST_CASE("Player gains point")
 
     m.bird.live = true;
     // Simulate the passage of 1 frame:
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.01);
-
-
+    m.on_frame(1);
     CHECK_FALSE(m.bird.hits_obstacle(m.obstacles));
-    CHECK(m.bird.center.x == m.obstacles[0].top_left().x);
+
+    // Simulate the passage of 1 frame:
     CHECK(m.bird.live);
-    CHECK(m.bird.gains_point(m.obstacles));
-
-
-
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.01);
-    CHECK_FALSE(m.bird.hits_obstacle(m.obstacles));
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.01);
-    CHECK_FALSE(m.bird.hits_obstacle(m.obstacles));
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    m.on_frame(0.1);
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-
-
-
-
-
-    std::cout << m.obstacles[0].top_left() <<std::endl;
-    score = m.score();
-    CHECK(m.bird.gains_point(m.obstacles));
+    m.on_frame(1);
     expected_score++;
-    CHECK(score == expected_score);
+    CHECK(m.bird.gains_point(m.obstacles));
+    CHECK(m.score() == expected_score);
 
     // Simulate the passage of 1 frame:
     m.on_frame(1);
-    m.score();
     expected_score++;
-    CHECK(score == expected_score);
+    CHECK(m.bird.gains_point(m.obstacles));
+    CHECK(m.score() == expected_score);
 }
 
 // FR7: The obstacles protruding from the top and bottom of the screen
 // will move from right to left on the screen.
-// See line 88 in model.cxx
 TEST_CASE("Obstacles move")
 {
     Model m(config);
@@ -239,11 +192,3 @@ TEST_CASE("Obstacles move")
     expected_position -= {2, 0};
     CHECK(m.obstacles[0].top_left() == expected_position);
 }
-
-
-//
-// TODO: Write preliminary model tests.
-//
-// These tests should demonstrate at least six of the functional
-// requirements.
-//
