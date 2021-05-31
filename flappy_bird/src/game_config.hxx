@@ -30,7 +30,8 @@ struct Game_config
 
 
     // The radius of the bird:
-    int bird_radius;
+    int bird_rad_width;
+    int bird_rad_height;
 
     // The bird's initial center {width, height}:
     ge211::Posn<int> bird_center_0;
@@ -46,7 +47,7 @@ struct Game_config
 
     // # of pixels between top obstacle and bottom obstacle,
     // aka the size of the hole/gap
-    int obstacle_top_down_spacing;
+    // int obstacle_top_down_spacing;
 
     // width of obstacle
     int obstacle_width;
