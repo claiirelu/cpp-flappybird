@@ -47,7 +47,7 @@ struct Game_config
 
     // # of pixels between top obstacle and bottom obstacle,
     // aka the size of the hole/gap
-    int obstacle_top_down_spacing;
+    // int obstacle_top_down_spacing;
 
     // width of obstacle
     int obstacle_width;
