@@ -137,11 +137,13 @@ TEST_CASE("Player wins")
 TEST_CASE("Player gains point")
 {
     Model m(config);
+
     double const dt = 1;
     m.obstacles.clear();
-    m.obstacles.push_back({470,0, 2, 10});
-    m.obstacles.push_back({472,0, 2, 10});
+    m.obstacles.push_back({502,0, 2, 1});
+    //m.obstacles.push_back({507,0, 2, 1});
     m.bird.live = true;
+    std::cout << m.bird.center <<std::endl;
 
     // ball doesn't move, obstacle moves
     m.bird.velocity = {0,0};
@@ -150,12 +152,57 @@ TEST_CASE("Player gains point")
     int expected_score = 0;
     int score;
 
+    ge211::Posn<ge211::geometry::Rect<int>::Coordinate>
+    expected_position = m.obstacles[0].top_left();
+
+    m.bird.live = true;
     // Simulate the passage of 1 frame:
-    m.on_frame(1);
-    m.on_frame(1);
-    m.on_frame(1);
-    m.on_frame(1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.01);
+
+
+    CHECK_FALSE(m.bird.hits_obstacle(m.obstacles));
+    CHECK(m.bird.center.x == m.obstacles[0].top_left().x);
+    CHECK(m.bird.live);
+    CHECK(m.bird.gains_point(m.obstacles));
+
+
+
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.01);
+    CHECK_FALSE(m.bird.hits_obstacle(m.obstacles));
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.01);
+    CHECK_FALSE(m.bird.hits_obstacle(m.obstacles));
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+    m.on_frame(0.1);
+    std::cout << m.obstacles[0].top_left() <<std::endl;
+
+
+
+
+
+    std::cout << m.obstacles[0].top_left() <<std::endl;
     score = m.score();
+    CHECK(m.bird.gains_point(m.obstacles));
     expected_score++;
     CHECK(score == expected_score);
 

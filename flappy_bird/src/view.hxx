@@ -17,11 +17,13 @@ private:
     Model& model_;
     ge211::Rectangle_sprite obstacle_sprite;
 
-    //temp
     ge211::Image_sprite const bird_sprite;
     ge211::Image_sprite const background_sprite;
     ge211::Image_sprite const end_background_sprite;
     ge211::Image_sprite const win_background_sprite;
 
     ge211::Text_sprite score_sprite;
+    ge211::Text_sprite small_score_sprite;
+    ge211::Text_sprite const end_text_sprite;
+    ge211::Text_sprite const win_text_sprite;
 };
