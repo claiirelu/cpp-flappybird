@@ -1,6 +1,7 @@
 #include "model.hxx"
 
 // constructs model with obstacles of random height and gaps
+float const bird_reset_velocity = -400;
 Model::Model(Game_config const& config)
         : random_obstacle_height(50, config.obstacle_max_height),
           random_offset(150, 300),
@@ -41,7 +42,7 @@ void
 Model::jump()
 {
     if (bird.live) {
-        bird.velocity.height = -400;
+        bird.velocity.height = bird_reset_velocity;
     }
 }
 

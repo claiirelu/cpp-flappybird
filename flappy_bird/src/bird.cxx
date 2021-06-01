@@ -3,6 +3,7 @@
 #include "bird.hxx"
 #include "game_config.hxx"
 
+int const offset = 12;
 
 // constructs bird
 Bird::Bird(Game_config const& config)
@@ -50,7 +51,6 @@ Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
     // note, the bird sprite is not perfectly round and is not symmetric in
     // regards to both x and y so an offset has to be added so it doesn't
     // look too misleading for the user but it is not perfect.
-    int offset = 12;
     for (Obstacle & o : obstacles) {
         if (center.x - rad_width < o.top_left().x + o.width &&
             center.x + rad_width > o.top_left().x &&

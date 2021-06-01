@@ -5,6 +5,11 @@
 static ge211::Color const obstacle_color{59, 163, 15};
 static ge211::Color const black{0, 0, 0};
 static ge211::Color const white{255,255,255};
+int const small_sprite_z = 12;
+int const end_text_x = 400;
+int const end_text_y = 375;
+int const end_text_z = 30;
+int const font_size = 50;
 
 View::View(Model& model)
         : model_(model),
@@ -14,11 +19,11 @@ View::View(Model& model)
           background_sprite("background.png"),
           end_background_sprite("end_background.png"),
           win_background_sprite("win_background.png"),
-          end_text_sprite("GAME OVER", {"font.ttf", 50}),
-          win_text_sprite("YOU WIN", {"font.ttf", 50})
+          end_text_sprite("GAME OVER", {"font.ttf", font_size}),
+          win_text_sprite("YOU WIN", {"font.ttf", font_size})
 {
     win_text_sprite.reconfigure(
-            ge211::Text_sprite::Builder({"font.ttf",50}).color(black)
+            ge211::Text_sprite::Builder({"font.ttf",font_size}).color(black)
             << "YOU WIN");
 }
 
@@ -29,19 +34,21 @@ View::draw(ge211::Sprite_set& set)
     // score sprite
     int score = model_.score();
     score_sprite.reconfigure(
-            ge211::Text_sprite::Builder({"font.ttf",60}).color(black) << score);
+            ge211::Text_sprite::Builder({"font.ttf",60})
+            .color(black) << score);
     set.add_sprite(score_sprite,{497,34}, 10);
     small_score_sprite.reconfigure(
-            ge211::Text_sprite::Builder({"font.ttf",50}).color(white) << score);
-    set.add_sprite(small_score_sprite,{500,39}, 12);
+            ge211::Text_sprite::Builder({"font.ttf",font_size})
+            .color(white) << score);
+    set.add_sprite(small_score_sprite,{500,39}, small_sprite_z);
 
     // alter background based on game state
     if (!model_.bird.live && model_.bird.started && model_.bird.win){
         set.add_sprite(win_background_sprite,{0,0},0);
-        set.add_sprite(win_text_sprite,{400,375},30);
+        set.add_sprite(win_text_sprite,{end_text_x,end_text_y},end_text_z);
     } else if (!model_.bird.live && model_.bird.started ){
         set.add_sprite(end_background_sprite,{0,0},0);
-        set.add_sprite(end_text_sprite,{400,375},30);
+        set.add_sprite(end_text_sprite,{end_text_x,end_text_y},end_text_z);
     } else {
         set.add_sprite(background_sprite,{0,0},0);
     }
