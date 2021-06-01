@@ -16,12 +16,17 @@ View::View(Model& model)
           win_background_sprite("win_background.png"),
           end_text_sprite("GAME OVER", {"font.ttf", 50}),
           win_text_sprite("YOU WIN", {"font.ttf", 50})
-{ }
+{
+    win_text_sprite.reconfigure(
+            ge211::Text_sprite::Builder({"font.ttf",50}).color(black)
+            << "YOU WIN");
+}
 
 void
 View::draw(ge211::Sprite_set& set)
 {
 
+    // score sprite
     int score = model_.score();
     score_sprite.reconfigure(
             ge211::Text_sprite::Builder({"font.ttf",60}).color(black) << score);
@@ -30,6 +35,7 @@ View::draw(ge211::Sprite_set& set)
             ge211::Text_sprite::Builder({"font.ttf",50}).color(white) << score);
     set.add_sprite(small_score_sprite,{500,39}, 12);
 
+    // alter background based on game state
     if (!model_.bird.live && model_.bird.started && model_.bird.win){
         set.add_sprite(win_background_sprite,{0,0},0);
         set.add_sprite(win_text_sprite,{400,375},30);
@@ -40,12 +46,13 @@ View::draw(ge211::Sprite_set& set)
         set.add_sprite(background_sprite,{0,0},0);
     }
 
+    // draws obstacles
     for (Obstacle o: model_.obstacles){
-        // std::cout<< o << std::endl;
         set.add_sprite(obstacle_sprite,o.top_left(),5,
                        ge211::Transform::scale_y(o.height));
     }
 
+    // draws bird
     auto p1 = model_.bird.top_left();
     auto p2 = p1.into<int>();
     set.add_sprite(bird_sprite, p2,5);
@@ -53,6 +60,7 @@ View::draw(ge211::Sprite_set& set)
 
 }
 
+// sets window dims
 ge211::Dims<int>
 View::initial_window_dimensions() const
 {

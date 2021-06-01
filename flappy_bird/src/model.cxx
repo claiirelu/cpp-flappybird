@@ -1,5 +1,6 @@
 #include "model.hxx"
 
+// constructs model with obstacles of random height and gaps
 Model::Model(Game_config const& config)
         : random_obstacle_height(50, config.obstacle_max_height),
           random_offset(150, 300),
@@ -25,7 +26,7 @@ Model::Model(Game_config const& config)
     }
 }
 
-// Freebie.
+// starts the game
 void
 Model::launch()
 {
@@ -35,6 +36,7 @@ Model::launch()
     }
 }
 
+// gives bird a velocity boost to look like a jump
 void
 Model::jump()
 {
@@ -43,6 +45,8 @@ Model::jump()
     }
 }
 
+// details in hxx but basically moves everything to the next frame and checks
+// for game ending
 void
 Model::on_frame(double dt)
 {
@@ -54,7 +58,6 @@ Model::on_frame(double dt)
             if (scorevalue == config.num_obstacles/2){
                 bird.win = true;
             }
-            // std::cout<< "hit" << std::endl;
             bird.live = false;
             return;
         } else {
@@ -62,15 +65,14 @@ Model::on_frame(double dt)
             bird = bird.next(dt);
         }
         for (Obstacle & o : obstacles) {
-            // std::cout<< o << std::endl;
             o.x -= 2;
-            // std::cout<< o << std::endl;
         }
 
     }
 
 }
 
+// gets the current score
 int
 Model::score()
 {

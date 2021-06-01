@@ -4,7 +4,7 @@
 #include "game_config.hxx"
 
 
-
+// constructs bird
 Bird::Bird(Game_config const& config)
         : rad_width(config.bird_rad_width),
           rad_height(config.bird_rad_height),
@@ -16,6 +16,7 @@ Bird::Bird(Game_config const& config)
           win(false)
 { }
 
+// finds the bird's top left coordinate
 Position
 Bird::top_left() const
 {
@@ -23,7 +24,7 @@ Bird::top_left() const
     return {center.x - rad_width, center.y - rad_height};
 }
 
-
+// detects collision with floor
 bool
 Bird::hits_bottom(Game_config const& config) const
 {
@@ -34,8 +35,7 @@ Bird::hits_bottom(Game_config const& config) const
     return false;
 }
 
-
-
+// moves the bird to the next position
 Bird
 Bird::next(double dt) const
 {
@@ -44,29 +44,31 @@ Bird::next(double dt) const
     return result;
 }
 
+// detects collision with obstacles
 bool
 Bird::hits_obstacle(std::vector<Obstacle>& obstacles) const {
+    // note, the bird sprite is not perfectly round and is not symmetric in
+    // regards to both x and y so an offset has to be added so it doesn't
+    // look too misleading for the user but it is not perfect.
+    int offset = 12;
     for (Obstacle & o : obstacles) {
         if (center.x - rad_width < o.top_left().x + o.width &&
             center.x + rad_width > o.top_left().x &&
-            center.y - (rad_height - 12) < o.top_left().y + o.height &&
-            center.y + (rad_height + 12) > o.top_left().y) {
-            // std::cout<< "hit" << std::endl;
-            // std::cout << center.x << " , " << center.y << std::endl;
-            // std::cout << o.top_left().x << " , " << o.top_left().y << std::endl;
+            center.y - (rad_height - offset) < o.top_left().y + o.height &&
+            center.y + (rad_height + offset) > o.top_left().y) {
             return true;
         }
     }
     return false;
 }
 
+// detects if the bird has moved past an obstacle
 bool
 Bird::gains_point(std::vector<Obstacle>& obstacles) const
 {
     if (live){
         for (Obstacle& o : obstacles) {
             if (center.x - rad_width == o.top_right().x &&
-            //if (center.x == o.top_left().x &&
                 !hits_obstacle(obstacles)){
                 return true;
             }
@@ -75,6 +77,7 @@ Bird::gains_point(std::vector<Obstacle>& obstacles) const
     return false;
 }
 
+// compares two birds
 bool
 operator==(Bird const& a, Bird const& b)
 {
@@ -89,12 +92,14 @@ operator==(Bird const& a, Bird const& b)
     return false;
 }
 
+// not compares two birds
 bool
 operator!=(Bird const& a, Bird const& b)
 {
     return !(a == b);
 }
 
+// prints bird
 std::ostream&
 operator<<(std::ostream& o, Bird const& bird)
 {

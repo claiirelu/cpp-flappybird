@@ -4,7 +4,6 @@
 
 #include <ge211.hxx>
 #include "game_config.hxx"
-//#include "model.hxx"
 #include <iostream>
 
 
@@ -49,27 +48,28 @@ struct Bird
     //
     // MEMBER FUNCTIONS
     //
-
-
     Position top_left() const;
 
     /// Returns the state of the bird after `dt` seconds have passed
     Bird next(double dt) const;
 
-    // These functions all perform collision detection by telling us whether
-    // this ball is *past* the given edge.
-
+    /// Detects collision with the bottom of the screen
     bool hits_bottom(Game_config const&) const;
 
+    /// Detects collision with obstacles
     bool hits_obstacle(std::vector<Obstacle>& obstacles) const;
+
+    /// Detects when passing an obstacle
     bool gains_point(std::vector<Obstacle>& obstacles) const;
 
 
-    //
-    // MEMBER VARIABLES
-    //
+    ///
+    /// MEMBER VARIABLES
+    ///
 
-    // radius of bird
+    // radius of bird (the bird sprite is not symmetric so detecting collision
+    // gets kind of wonky so this is used to reduce the number of adjusted
+    // offsets
     int rad_width;
     int rad_height;
 
@@ -79,10 +79,13 @@ struct Bird
 
     Acceleration acceleration;
 
+    // when the bird is live, it is moving
     bool live;
 
+    // when started is true, the game has passed the initial state
     bool started;
 
+    // when the player passes enough obstacles, it is considered a win
     bool win;
 };
 
