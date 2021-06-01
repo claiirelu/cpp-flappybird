@@ -16,7 +16,7 @@ struct Model
     ///
 
     // updates state of game for one frame
-    // 1. if the bird is going to hit an obstacle, set bird to be dead, game ends
+    // 1. if the bird is going to hit an obstacle, set bird to be dead,game ends
     // 2. if the bird is going to hit the ground, set bird to be dead, game ends
     // 3. if the bird passes the number of sets of obstacles, set bird to be
     // dead, game ends
