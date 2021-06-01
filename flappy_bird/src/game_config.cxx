@@ -4,7 +4,7 @@
 // determines all the default values of all the member variables.
 Game_config::Game_config()
         : scene_dims{1000, 750},
-          num_obstacles{30},
+          num_obstacles{32},
           bird_rad_width{30},
           bird_rad_height{18},
           bird_center_0{scene_dims.width/2,scene_dims.height/2},
