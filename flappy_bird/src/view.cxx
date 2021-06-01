@@ -8,7 +8,7 @@ static ge211::Color const white{255,255,255};
 int const small_sprite_z = 12;
 int const end_text_x = 400;
 int const end_text_y = 375;
-int const end_text_z = 30;
+int const end_text_z = 31;
 int const font_size = 50;
 
 View::View(Model& model)
