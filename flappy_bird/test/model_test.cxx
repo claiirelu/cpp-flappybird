@@ -119,7 +119,7 @@ TEST_CASE("Player wins")
     Model m(config);
     m.obstacles.clear();
     m.bird.live = true;
-    m.scorevalue = 15;
+    m.scorevalue = m.config.num_obstacles/2;
 
     m.on_frame(1);
     CHECK_FALSE(m.bird.live);
