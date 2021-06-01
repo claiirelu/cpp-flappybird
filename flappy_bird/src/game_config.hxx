@@ -1,18 +1,6 @@
-
-
-// Defines a struct to hold configuration parameters. You should try different
-// values to ensure that your model and UI adjust appropriately. You can do this
-// by creating an instance and then assigning its parameters before constructing
-// a `Model`:
-//
-//     Game_config config;
-//     config.brick_cols = 15;
-//     config.ball_radius *= 2;
-//     Model model(config);
-//
+// Defines a struct to hold configuration parameters.
 
 #pragma once
-
 #include <ge211.hxx>
 
 
@@ -29,7 +17,7 @@ struct Game_config
     int num_obstacles;
 
 
-    // The radius of the bird:
+    // The radius of the bird (bird is round but not symmetric):
     int bird_rad_width;
     int bird_rad_height;
 
@@ -44,10 +32,6 @@ struct Game_config
 
     // # of pixels between obstacles side to side
     int obstacle_side_spacing;
-
-    // # of pixels between top obstacle and bottom obstacle,
-    // aka the size of the hole/gap
-    // int obstacle_top_down_spacing;
 
     // width of obstacle
     int obstacle_width;

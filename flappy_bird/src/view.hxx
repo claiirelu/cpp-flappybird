@@ -25,5 +25,5 @@ private:
     ge211::Text_sprite score_sprite;
     ge211::Text_sprite small_score_sprite;
     ge211::Text_sprite const end_text_sprite;
-    ge211::Text_sprite const win_text_sprite;
+    ge211::Text_sprite win_text_sprite;
 };

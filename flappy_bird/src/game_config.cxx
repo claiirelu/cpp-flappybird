@@ -1,7 +1,3 @@
-/*******************************************/
-/*** DO NOT CHANGE ANYTHING IN THIS FILE ***/
-/*******************************************/
-
 #include "game_config.hxx"
 
 // This is the default (and only) constructor for `Game_config`. It

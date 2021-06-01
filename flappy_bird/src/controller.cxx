@@ -1,45 +1,42 @@
 #include "controller.hxx"
 #include "model.hxx"
 
-// Controller::Controller(Game_config const& model)
-//         : view_(model_),
-//         bird(model)
-//
-// { }
+// constructs controller
 Controller::Controller(Model& model)
         : model_(model),
           view_(model)
 { }
 
+// draws using view function
 void
 Controller::draw(ge211::Sprite_set& set)
 {
     view_.draw(set);
 }
 
+// allows game to start using spacebar and all subsequent presses to
+// correspond to the bird jumping
 void
 Controller::on_key(ge211::Key key)
 {
     if (key == ge211::Key::code(' ')){
         if (model_.bird.live) {
-            // std::cout << "jumpin" << std::endl;
             model_.jump();
-            // model_.bird.acceleration.height  = 9.8;
         }
         else{
-            // std::cout << "launchin" << std::endl;
             model_.launch();
         }
     }
 }
 
+// sets window dims
 ge211::Dims<int>
 Controller::initial_window_dimensions() const
 {
     return view_.initial_window_dimensions();
 }
 
-
+// moves the model on each frame
 void
 Controller::on_frame(double dt)
 {

@@ -7,5 +7,4 @@ main()
     Model model;
     Controller controller(model);
     controller.run();
-    // Controller().run();
 }

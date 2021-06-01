@@ -131,22 +131,16 @@ TEST_CASE("Player gains point")
 {
     Model m(config);
 
-    double const dt = 1;
     m.obstacles.clear();
     m.obstacles.push_back({472,0, 2, 1});
     m.obstacles.push_back({474,0, 2, 1});
     m.bird.live = true;
-    std::cout << m.bird.center <<std::endl;
 
     // ball doesn't move, obstacle moves
     m.bird.velocity = {0,0};
     m.bird.acceleration = {0,0};
 
     int expected_score = 0;
-    int score;
-
-    ge211::Posn<ge211::geometry::Rect<int>::Coordinate>
-    expected_position = m.obstacles[0].top_left();
 
     m.bird.live = true;
     // Simulate the passage of 1 frame:
@@ -172,7 +166,6 @@ TEST_CASE("Player gains point")
 TEST_CASE("Obstacles move")
 {
     Model m(config);
-    double const dt = 1;
     m.bird.live = true;
 
     // ball doesn't move, obstacle moves
