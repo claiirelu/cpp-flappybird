@@ -14,5 +14,7 @@
 9. The obstacles will be at random heights.
 10. The gaps between the obstacles (the holes the player jumps through) will be of random size.
 
-![img](flappystart.png)
-![img](flappyend.png)
+<p float="left">
+  <img src="flappystart.png" width='450'/>
+  <img src="flappyend.png" width='450'/> 
+</p>
